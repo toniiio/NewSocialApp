@@ -59,6 +59,7 @@
               </div>
             </div>
           </div>
+          <section> 
         <?php require_once '_partials/snow.php' ?>
           <?php 
             if(isset($_GET['peace'])) {
@@ -68,13 +69,29 @@
             }
           ?>
           <?php
-          if(isset($_SESSION['username'])){ 
-          ?>  
-          <div class="card" style ="width: 25rem;text-align: center;margin-left: 38%;">
+          if(isset($_SESSION['username'])){
+            include('../autoload.php');
+            $userManager = new userManager();
+            $user = $userManager->findByEmail($_SESSION['email']);
+          ?>
+          <div id="conteneurCard" style="display:flex;justify-content:space-around;">
+          <div class="card" style ="width: 11rem;text-align:center;background-color:<?php echo $user->getCouleur();?>">
+            <div class="card-body">
+              <img src="../images/<?php echo $user->getImg()?>." style="height: 7rem;"  alt="photodeprofil">
+              <p class="card-text" style="font-weight:bold;font-style:italic;font-weight;bold">
+              <?php echo $user->getFirstName()." ".$user->getName()?></p>
+              <p class="card-text"><?php echo $user->getMetier()?></p>
+              <p class="card-text"><?php echo $user->getDescript()?></p>
+            </div>  
+          </div>           
+          <div class="card" style ="width: 25rem;text-align: center;height: fit-content;">
             <div class="card-body">
             <button type="button" class="card-text" data-bs-toggle="modal" data-bs-target="#exampleModall" style="border: 3px solid dodgerblue;
             border-radius: 20px;">Écrire un nouveau post</button>
-            </div>
+            </div>  
+          </div>
+          <div class="card" style ="width: 11rem;">
+          </div>       
             <div class="modal fade" id="exampleModall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
               <div class="modal-content">
@@ -83,11 +100,6 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <?php
-              include('../autoload.php');
-              $userManager = new userManager();
-              $user = $userManager->findByEmail($_SESSION['email']);
-              ?>
               <div class="userPosition" style="text-align: left;
               margin-bottom: 1%;
               font-weight: bold;">
@@ -97,7 +109,11 @@
               </div>
               <form method="post">
                 <div class="mb-3">
-                <textarea class="form-control" id="message-text" name="message" rows="5" required placeholder="Balance ton post"></textarea>
+                <textarea class="form-control" id="message-text" name="message" rows="4" required placeholder="Balance ton post"></textarea>
+                </div>
+                <div class="mb-3">
+                <input type="file" id="imgPic" name="imgPic"
+                accept="image/*,.pdf">
                 </div>
             </div>
                 <div class="modal-footer">
@@ -117,7 +133,7 @@
                 $post->setUserId($user->getId());
 
                 $pdo = new PDO("mysql:host=localhost;dbname=book","root");
-                $Insert = 'Insert into post (message,date,userId) values (:mess,:date,:userID)';
+                $Insert = 'Insert into post (message,date,userId,img) values (:mess,:date,:userID,:img)';
                 $stmt = $pdo->prepare($Insert);
                 $date = new DateTime();
                 $interval2h = new DateInterval("PT1H");
@@ -128,6 +144,7 @@
                 ':mess' => $post->getMessage(),
                 ':date' => $post->getDate(),
                 ':userID' => $post->getUserId(),
+                'img'=> $post->getImg(),
                 ]);
               }
               $pdo = new PDO("mysql:host=localhost;dbname=book","root");
@@ -139,20 +156,24 @@
               foreach($recupSelect as $aff){
                 
                 echo'
-                <div class="card" style ="width: 25rem;text-align: center;margin-left: 38%;margin-top: 2%;">
-                <div class="card-header">
+                <div class="card" style ="width: 25rem;margin-left: 37%;top:-220px;margin-bottom:2%;">
+                <div class="card-header" style="text-align: center;">
                 <img src="../images/'.$aff['image'].'" style ="height:35px"; alt="profil">'.$aff['name'].' '.$aff['firstName'].'
                 <div class="metier">'.utf8_encode($aff['metier']).'</div>
                 </div>
                 <div class="card-body">
-                <p class="card-text" data-bs-toggle="modal" data-bs-target="#exampleModall";>
-                '.$aff['message'].'</p>
+                '.$aff['message'].'';
+                if ($aff['img'] != null){
+                echo'  
+                <img src="../images/'.$aff['img'].'" style="width:100%;" alt="imgload"">';}
+                echo'
                 </div>
                 <div class="card-footer text-muted">
                 <img src ="../images/like.png" id="like" style="height:20px" alt="aime">
                 <span id="compteurLike"></span>
                 <a href="home.php"><img src ="../images/comment.png" id="comment" style="height:20px" alt="commentaire"></a>
                 <img src ="../images/share.png" id="share" style="height:25px" alt="partage">
+                </div>
                 </div>';
               }
             }
@@ -162,12 +183,13 @@
             echo 'haaha';
           }
           ?>
-          <footer class="bg-light">
-            <?php require_once '_partials/footer.php'; ?>
-          </footer>
           <script src="../js/javascript.js"></script> 
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>  
-        </div>      
+        </section>
+        <footer class="bg-light">
+            <?php require_once '_partials/footer.php'; ?>
+          </footer>
+          </div>        
     </body>         
 </html> 

@@ -52,7 +52,7 @@
         }
         function findByEmail($email){
             $pdo = new PDO("mysql:host=localhost;dbname=book","root");
-            $query = "Select id,name,firstname,password,birthdate,email from user where email=:email";
+            $query = "Select id,name,firstname,password,birthdate,email,image,metier,couleur,description from user where email=:email";
             $stmt="";
             try{
                 $stmt = $pdo->prepare($query);
@@ -70,7 +70,11 @@
                 $Email= $tabSelect['email'];
                 $pass = $tabSelect['password'];
                 $date = $tabSelect['birthdate'];
-                return $user = new User($id,$name,$FirstName,$Email,$pass,$date);
+                $img = $tabSelect['image'];
+                $metier = $tabSelect['metier'];
+                $couleur = $tabSelect['couleur'];
+                $descript = $tabSelect['description'];
+                return $user = new User($id,$name,$FirstName,$Email,$pass,$date,$img,$metier,$couleur,$descript);
              }            
         }
         function update($user){

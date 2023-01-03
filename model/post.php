@@ -5,11 +5,13 @@
         private $message;
         private $date;
         private $userID;
+        private $img;
 
-        function __construct(int $id=null,string $message,int $userID=null){
+        function __construct(int $id=null,string $message,int $userID=null,string $img){
             $this->id = $id;
             $this->message = $message;
             $this->userID = $userID;
+            $this->img = $img;
         }
         function getId(){
             return $this->id;
@@ -34,6 +36,12 @@
         }
         function setUserId(string $userID){
             $this->userID = $userID;
+        }
+        function getImg(){
+          return $this->img;
+        }
+        function setImg(string $img){
+            $this->img = $img;
         }
     }
 ?>
