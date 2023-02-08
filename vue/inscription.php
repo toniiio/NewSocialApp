@@ -21,7 +21,7 @@ if(isset($_POST['btn-submit'])){
         <title>Inscription</title>
         <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
     </head>
-    <body>
+    <body style="background-color:bisque;">
         <?php
             if(isset($errors))
             {
@@ -60,7 +60,7 @@ if(isset($_POST['btn-submit'])){
             <input type="text" name="name" id="name" class="form-control">
         </div>
         <div class="form-group">
-            <label for="firstname">Prenom</label>
+            <label for="firstname">Prénom</label>
             <input type="text" name="firstname" id="firstname" class="form-control">
         </div> 
         <div class="form-group">
@@ -74,6 +74,18 @@ if(isset($_POST['btn-submit'])){
         <div class="form-group">
             <label for="date">Anniversaire</label>
             <input type="date" name="date" id="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="text">Métier</label>
+            <input type="text" name="metier" id="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="text">Description métier</label>
+            <textarea name="descript" id="text" rows="3" class="form-control"></textarea>
+        </div> 
+        <div class="form-group">
+            <label for="imgProfil">Photo de profil</label>
+            <input type="file" id="imgProfil" name="imgProfil" accept="image/*,.pdf">
         </div>
         <input type="submit" value="Valider" class="btn btn-primary" style="margin-top:10px;" name="btn-submit">
         <br> 

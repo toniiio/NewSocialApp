@@ -12,20 +12,25 @@
         }
         function insert($user){
            $pdo = new PDO("mysql:host=localhost;dbname=book","root");
-           $query = "Insert into user(name,firstName,email,password,birthDate)
-            values(:name,:firstName,:email,:password,:birthDate)";
+           $query = "Insert into user(name,firstName,email,password,birthDate,dateTime)
+            values(:name,:firstName,:email,:password,:birthDate,:dateTime)";
             $stmt="";
             try{
                 $stmt = $pdo->prepare($query);
             }catch(PDOexception $e){
                 $stmt = 'erreur requete: '.$e->getMessage();
             }
+            $date = new DateTime();
+            $interval2h = new DateInterval("PT1H");
+            $date->add($interval2h);
+            $this->dateTime = $date->format("d-m-Y H:i:s");
             $result = $stmt->execute([
                 ':name' => $user->getName(),
                 ':firstName' => $user->getFirstName(),
                 ':email' => $user->getEmail(),
                 ':password' => password_hash($user->getPassword(),PASSWORD_BCRYPT),
                 ':birthDate' => $user->getBirthdate(),
+                ':dateTime' => $user->getDatetime(),
             ]);
             return $result; 
         }

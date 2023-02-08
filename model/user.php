@@ -13,7 +13,7 @@
       private $couleur;
       private $description;
 
-      function __construct(string $id=null,string $name,string $firstName,string $email, string $password,string $birthDate,string $img,string $metier,string $couleur,string $description){
+      function __construct(string $id=null,string $name,string $firstName,string $email, string $password,string $birthDate,string $img,string $metier,string $description){
         $this->id = $id;
         $this->name = $name;
         $this->firstName = $firstName;
@@ -22,7 +22,6 @@
         $this->birthDate = $birthDate;
         $this->img = $img;
         $this->metier = $metier;
-        $this->couleur = $couleur;
         $this->description = $description;
         $date = new DateTime();
         $interval2h = new DateInterval("PT1H");
@@ -64,6 +63,12 @@
       }
       function setBirthdate($birthDate){
         $this->birthDate = $birthDate;
+      }
+      function getDatetime(){
+        return $this->datetime;  
+      }
+      function setDatetime($dateTime){
+        $this->datetime = $dateTime;
       }
       function getImg(){
         return $this->img;

@@ -17,7 +17,7 @@
         <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/style.css">    
     </head>
-    <body>
+    <body style="background-color:bisque;">
     <?php
            if(isset($verif)){
                 if($verif == true){     

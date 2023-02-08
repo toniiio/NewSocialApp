@@ -25,6 +25,9 @@ a:hover{
     margin-bottom: 1%;
     font-weight: bold;
 }
+.form-control{
+  margin-bottom: 0.5rem;
+}
 .snow {
   position: absolute;
   height: 100%;
